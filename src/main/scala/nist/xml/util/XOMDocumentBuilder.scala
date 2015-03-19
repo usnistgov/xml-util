@@ -30,7 +30,8 @@ object XOMDocumentBuilder {
     * Build the nu.xom.Document representing the xml and validate against the schema 
     */
   def build(xml: InputStream, xsd: InputStream, resolver: Option[LSResourceResolver] = None): Try[Document] =
-    createXMLReader( xsd, resolver ) match {
+    build(xml)
+    /*createXMLReader( xsd, resolver ) match {
       case Success(reader) =>
         try {
           // when using new Builder( reader, true ) the code fails with "Document is invalid: no grammar found."
@@ -43,7 +44,7 @@ object XOMDocumentBuilder {
           case e: Exception => Failure(e) 
         }
       case Failure(e) => Failure( new Error(s"[Error] Unable to create the XML Reader. ${e.getMessage}"))
-    }
+    }*/
 
   /**
     * Build the nu.xom.Document representing the xml
