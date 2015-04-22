@@ -1,4 +1,4 @@
-package nist.xml.util;
+package ssmm.xml;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.ls.LSResourceResolver;

@@ -1,4 +1,4 @@
-package nist.xml.util;
+package ssmm.xml;
 
 import java.util.List;
 

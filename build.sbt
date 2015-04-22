@@ -1,15 +1,16 @@
-organization   := "gov.nist"
+organization   := "ssmm"
 
 name           := "xml-util"
 
-version        := "2.0.0-SNAPSHOT"
+version        := "1.0.0-SNAPSHOT"
 
 crossPaths := false
 
 scalacOptions += "-target:jvm-1.7"
 
 libraryDependencies ++= Seq(
-  "xom"          %     "xom"          %    "1.2.5"
+  "junit"        %     "junit"        %    "4.12"   %   "test",
+  "com.novocode" % "junit-interface"  %    "0.11"   %   "test"
 )
 
 //Remove scala version

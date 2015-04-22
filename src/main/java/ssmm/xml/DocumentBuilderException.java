@@ -1,4 +1,4 @@
-package nist.xml.util;
+package ssmm.xml;
 
 /**
  * Exception raised by the document builder when a problem is found

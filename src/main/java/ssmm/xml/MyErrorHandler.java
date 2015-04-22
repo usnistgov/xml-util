@@ -1,4 +1,4 @@
-package nist.xml.util;
+package ssmm.xml;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
