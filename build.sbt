@@ -2,16 +2,18 @@ organization   := "gov.nist"
 
 name           := "xml-util"
 
-version        := "1.0.1-SNAPSHOT"
+version        := "2.0.0-SNAPSHOT"
 
 crossPaths := false
+
+scalacOptions += "-target:jvm-1.7"
 
 libraryDependencies ++= Seq(
   "xom"          %     "xom"          %    "1.2.5"
 )
 
 //Remove scala version
-crossPaths := false
+crossPaths        := false
 
 publishMavenStyle := true
 

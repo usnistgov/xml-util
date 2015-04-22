@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<List 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/home/malick/projects/nist/xml-util/src/main/resources/Person.xsd">
+    
+    <Person FullName="John Doe">
+        <Address>
+            <Line1>100 Bureau Dr.</Line1>
+            <ZipCode></ZipCode>
+            <State>MD</State>
+        </Address>
+    </Person>
+    
+    <Person FullName="Foo" Role="Admin">
+        <Address>
+            <Line1>100 Bureau Dr.</Line1>
+            <ZipCode></ZipCode>
+            <State>MD</State>
+        </Address>
+    </Person>
+    
+</List>
