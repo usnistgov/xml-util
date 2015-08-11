@@ -40,8 +40,8 @@ object XOMDocumentBuilder {
         } catch { 
           case e: ValidityException => Failure( new Error( msg(e) ) )
           case e: ParsingException  => Failure( new Error( msg(e) ) )
-          case e: Exception => Failure(e) 
-        }
+          case e: Exception => Failure( new Error(s"[Error] Unable to parse the XML document. ${e.getMessage}"))
+        } 
       case Failure(e) => Failure( new Error(s"[Error] Unable to create the XML Reader. ${e.getMessage}"))
     }
 
@@ -55,7 +55,7 @@ object XOMDocumentBuilder {
     } catch { 
        case e: ValidityException => Failure( new Error( msg(e) ) )
        case e: ParsingException  => Failure( new Error( msg(e) ) )
-       case e: Exception => Failure(e) 
+       case e: Exception => Failure( new Error(s"[Error] Unable to parse the XML document. ${e.getMessage}"))
     }
 
   private def createXMLReader( xsd: InputStream, resolver: Option[LSResourceResolver] = None ): Try[XMLReader] = 
@@ -69,7 +69,7 @@ object XOMDocumentBuilder {
       spf.setNamespaceAware(true)
       // For some reasons when this is set the code is failing with 'Document is invalid: no grammar found.'
       // It seems like it is expecting an internal DTD or schema
-      // spf.setValidating(true)
+      // spf.setValidating(true) // only works for DTD
       spf.setSchema(schema)
       val parser = spf.newSAXParser
       val reader = parser.getXMLReader
@@ -83,11 +83,12 @@ object XOMDocumentBuilder {
     val details = (0 until nbError) map { i =>
       s"${ve.getValidityError(i)} At line ${ve.getLineNumber(i)}, column ${ve.getColumnNumber(i)}" 
     } mkString("\t- ","\n\t- ", "")
-    s"The document is invalid. ${nbError} error(s) found.\n  ${ details }"
+    s"The document is invalid (validity). ${nbError} error(s) found.\n  ${ details }"
   }
 
   def msg(pe: ParsingException) =
-    s"The document is invalid.\n\t[Error] ${pe.getMessage} At line ${pe.getLineNumber}, column ${pe.getColumnNumber} "
+    s"The document is invalid (parsing).\n\t[Error] ${pe.getMessage} At line ${pe.getLineNumber}, column ${pe.getColumnNumber} "
+
 }
 
 class CustomErrorHandler extends ErrorHandler { 
