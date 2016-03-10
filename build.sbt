@@ -10,6 +10,10 @@ libraryDependencies ++= Seq(
   "xom"          %     "xom"          %    "1.2.5"
 )
 
+libraryDependencies ++= Seq("junit" % "junit" % "4.12")
+
+libraryDependencies ++= Seq("commons-io" % "commons-io" % "2.4")
+
 //Remove scala version
 crossPaths := false
 
@@ -30,16 +34,6 @@ lazy val noPublishing = Seq(
     publishLocal := (),
     publishTo    := None
   )
-
-/*
-lazy val publishM2Configuration = 
-   TaskKey[PublishConfiguration]("publish-m2-configuration", 
-     "Configuration for publishing to the .m2 repository.") 
-
-lazy val publishM2 = 
-   TaskKey[Unit]("publish-m2", 
-      "Publishes artifacts to the .m2 repository.") 
-*/
 
 lazy val m2Repo = 
    Resolver.file("publish-custom-m2-local", 
