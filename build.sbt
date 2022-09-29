@@ -1,54 +1,41 @@
-organization   := "gov.nist"
+import sbt._
+import Keys._
 
-name           := "xml-util"
-
-version        := "1.0.0"
-
-crossPaths := false
-
-libraryDependencies ++= Seq(
-  "xom"          %     "xom"          %    "1.2.5"
+ThisBuild / organization   := "gov.nist"
+ThisBuild / version        := "2.0.0"
+ThisBuild / scalaVersion  := "2.12.10"
+ThisBuild / scalacOptions := Seq(
+  "-encoding", "utf8",
+  "-feature",
+  "-unchecked",
+  "-deprecation",
+  "-target:jvm-1.8",
+  "-language:_",
+  "-Dconfig.trace=loads",
+  "-J-Xmx2g"
 )
 
-//Remove scala version
-crossPaths := false
-
-publishMavenStyle := true
-
-credentials       += Credentials(Path.userHome / ".nexusCredentials")
-
-publishTo         := {
-  val nexus = "http://vm-070.nist.gov:8081/"
-  if (version.value.trim.endsWith("SNAPSHOT"))
-    Some("snapshots" at nexus + "nexus/content/repositories/snapshots")
-  else
-    Some("releases"  at nexus + "nexus/content/repositories/releases")
-}
-
-lazy val noPublishing = Seq(
-    publish      := (),
-    publishLocal := (),
-    publishTo    := None
+lazy val moduleSettings =
+  Seq(
+    crossPaths := false,
+    publishMavenStyle := true,
+    credentials += Credentials(Path.userHome / ".nexusCredentials"),
+    publishTo := {
+      val nexus = "http://hit-dev-admin.nist.gov:9001/"
+      if (version.value.trim.endsWith("SNAPSHOT"))
+        Some(("snapshots" at nexus + "repository/snapshots").withAllowInsecureProtocol(true))
+      else
+        Some(("releases" at nexus + "repository/releases").withAllowInsecureProtocol(true))
+    }
   )
 
-/*
-lazy val publishM2Configuration = 
-   TaskKey[PublishConfiguration]("publish-m2-configuration", 
-     "Configuration for publishing to the .m2 repository.") 
+lazy val xmlUtil = (project in file("."))
+  .settings(moduleSettings: _*)
+  .settings(
+    name := "xml-util",
+    libraryDependencies ++= Seq(
+      "xom" % "xom" % "1.3.7"
+    )
+  )
 
-lazy val publishM2 = 
-   TaskKey[Unit]("publish-m2", 
-      "Publishes artifacts to the .m2 repository.") 
-*/
 
-lazy val m2Repo = 
-   Resolver.file("publish-custom-m2-local", 
-      file("/vagrant/.m2") )
-
-publishM2Configuration <<= (packagedArtifacts, checksums in publish, ivyLoggingLevel) map { (arts, cs, level) => 
-      Classpaths.publishConfig(arts, None, resolverName = m2Repo.name, checksums = cs, logging = level) 
-   }
-
-publishM2 <<= Classpaths.publishTask(publishM2Configuration, deliverLocal)
-
-otherResolvers += m2Repo
