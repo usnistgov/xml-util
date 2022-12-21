@@ -2,14 +2,13 @@ import sbt._
 import Keys._
 
 ThisBuild / organization   := "gov.nist"
-ThisBuild / version        := "2.0.0"
-ThisBuild / scalaVersion  := "2.12.10"
+ThisBuild / version        := "2.1.0"
+ThisBuild / scalaVersion  := "2.13.10"
 ThisBuild / scalacOptions := Seq(
   "-encoding", "utf8",
   "-feature",
   "-unchecked",
   "-deprecation",
-  "-target:jvm-1.8",
   "-language:_",
   "-Dconfig.trace=loads",
   "-J-Xmx2g"
