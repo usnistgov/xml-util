@@ -31,13 +31,13 @@ object XOMExtensions {
 
     def view = ( 0 until elems.size ).view map ( i => elems.get( i ) )
 
-    def map[T]( f: Element => T ): Seq[T] = (view map f).toSeq
+    def map[T]( f: Element => T ): Seq[T] = ( view map f ).force
 
-    def filter( f: Element => Boolean ): Seq[Element] = (view filter f).toSeq
+    def filter( f: Element => Boolean ): Seq[Element] = ( view filter f ).force
 
-    def foldLeft[T](z: T)(op: (T, Element) => T): T = view.foldLeft(z)(op)
+    def foldLeft[T](z: T)(op: (T, Element) ⇒ T): T = view.foldLeft(z)(op)
 
-    def partition( f: Element => Boolean ): ( Seq[Element], Seq[Element] ) = (view.toSeq partition f)
+    def partition( f: Element => Boolean ): ( Seq[Element], Seq[Element] ) = view.force partition f 
 
     def forall( f: Element => Boolean ): Boolean = view forall f
 
